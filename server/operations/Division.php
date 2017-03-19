@@ -26,7 +26,7 @@ class Division extends AbstractOperation
         $this->evaluateArguments($numbers);
 
         if (!$this->getResult()->error) {
-            $this->getResult()->operationResult = $numbers[0] - $numbers[1];
+            $this->getResult()->operationResult = $numbers[0] / $numbers[1];
         }
 
         return $this->result;
