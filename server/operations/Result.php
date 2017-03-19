@@ -8,7 +8,6 @@
 
 namespace Calculator\Server\Operations;
 
-
 class Result
 {
     public $error;
@@ -21,6 +20,7 @@ class Result
         $this->operationResult = null;
         $this->errorMessage = array();
     }
+
 
 
 }

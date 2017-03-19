@@ -11,12 +11,12 @@ define('DS',DIRECTORY_SEPARATOR);
 define('ROOT',dirname(dirname(dirname(__FILE__))).DS);
 define('SERVER_DIR', ROOT.'server'.DS);
 
-require_once ROOT.'server/RestServer.php';
+require ROOT.'vendor'.DS.'autoload.php';
 
 use Calculator\Server\RestServer;
 
 $server = new RestServer;
-
+exit();
 
 //echo json_encode(['result' => 5], JSON_PRETTY_PRINT);
 

@@ -8,10 +8,7 @@
 
 namespace Calculator\Server\Operations;
 
-
 interface Operation
 {
     public function execute($numbers = array());
-
-    function evaluateArguments();
 }

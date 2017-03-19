@@ -8,7 +8,7 @@
 
 namespace Calculator\Server;
 
-require_once SERVER_DIR.'Calculator.php';
+use Calculator\Server\Response\Response;
 
 class RestServer
 {
@@ -26,41 +26,37 @@ class RestServer
         $this->start();
     }
 
+    private function extractPathInfo()
+    {
+        $this->pathInfo = trim(getenv('PATH_INFO'), '/');
+    }
+
     public function start()
     {
-
+        $result = null;
         if ($this->evaluatePathInfo()) {
             $this->setArgs(explode('/', $this->pathInfo));
 
             $calculator = Calculator::getInstance();
 
             $calculator->setUp($this->args);
-            $calculator->executeOperation();
+            $result = $calculator->executeOperation();
+
+            $this->returnResponse($result);
         }
 
-        var_dump($this->args);
 
+    }
 
-//        //$preg = preg_match($pattern, $this->pathInfo, $matches);
-//        var_dump($preg);
-//        var_dump($matches);
-        // Get request url and script url
+    private function evaluatePathInfo()
+    {
+        return true;
+        $twoNumbersPattern = '@^(add|sub|mul|div)\/(\d+|\d+.\d+)\/(\d+|\d+.\d+)$@';
+        if ($this->pathInfo) {
+            return preg_match($twoNumbersPattern, $this->pathInfo);
+        }
 
-
-        // Get our url path and trim the / of the left and the right
-//        if ($request_url != $script_url) {
-//            $url = trim(preg_replace('/'.str_replace('/', '\/', str_replace('index.php', '', $script_url)).'/', '',
-//                $request_url, 1), '/');
-//        }
-
-//        if ($url) {
-//            $operands = explode('/', $url);
-//        }
-
-//        var_dump($request_url);
-//        var_dump($script_url);
-//        var_dump($url);
-//        var_dump($operands);
+        return false;
     }
 
     /**
@@ -71,17 +67,13 @@ class RestServer
         $this->args = $args;
     }
 
-    private function extractPathInfo()
+    private function returnResponse($result)
     {
-        $this->pathInfo = trim(getenv('PATH_INFO'), '/');
-    }
-
-    private function evaluatePathInfo()
-    {return true;
-        $twoNumbersPattern = '@^(add|sub|mul|div)\/(\d+|\d+.\d+)\/(\d+|\d+.\d+)$@';
-        if ($this->pathInfo) {
-            return preg_match($twoNumbersPattern, $this->pathInfo);
+        $response = new Response();
+        $response->setMessage($result);
+        if ($result->error) {
+            $response->setStatus(400);
         }
-        return false;
+        $response->send();
     }
 }

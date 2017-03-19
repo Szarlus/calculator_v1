@@ -1,0 +1,14 @@
+{
+    "name": "karol/calculator",
+    "authors": [
+        {
+            "name": "Szarlus",
+            "email": "karolgoraus@gmail.com"
+        }
+    ],
+    "require": {
+	},
+	"autoload" : {
+		"psr-4" : { "Calculator\\" : "./" }
+	}
+}

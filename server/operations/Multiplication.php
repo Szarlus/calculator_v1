@@ -2,17 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: karol
- * Date: 18.03.2017
- * Time: 14:58
+ * Date: 19.03.2017
+ * Time: 22:58
  */
 
 namespace Calculator\Server\Operations;
 
-class Addition extends AbstractOperation
+
+class Multiplication extends AbstractOperation
 {
 
     /**
-     * Addition constructor.
+     * Multiplication constructor.
      */
     public function __construct()
     {
@@ -24,7 +25,7 @@ class Addition extends AbstractOperation
         parent::execute($numbers);
 
         if (!$this->getResult()->error) {
-            $this->getResult()->operationResult = $numbers[0] + $numbers[1];
+            $this->getResult()->operationResult = $numbers[0] * $numbers[1];
         }
 
         return $this->result;
